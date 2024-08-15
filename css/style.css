@@ -1,5 +1,5 @@
 body {
-    background: 
+    /* background: 
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url('../images/pozadi.png') no-repeat center center/cover;
         background-size: cover;
@@ -7,7 +7,44 @@ body {
         background-repeat: no-repeat;
         background-attachment:fixed ;
     height: 100vh;
-    margin: 0;
+    margin: 0; */
 }
- 
+         /* Základní stylování karuselu */
+        .carousel {
+            width: 800px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 1s ease;
+        }
+
+        .carousel img {
+            width: 800px;
+            flex-shrink: 0;
+        }
+
+        /* Šipky pro pohyb */
+        .prev, .next {
+            position: absolute;
+            top:25%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            height: 20rem;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
  

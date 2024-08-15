@@ -1,35 +1,55 @@
-// const carusel = document.querySelector(".carousel-control-next");
-// carusel.addEventListener("click", () => {
-//     console.log("klik");
-//     var currentIndex = event.to; // Index of the new slide
-//     var date = ""; // Initialize variable for date
+let currentIndex = 1; // Startujeme na prvním obrázku (po duplikátu posledního)
+const images = document.querySelectorAll(".carousel img");
+const totalImages = images.length;
+const wrapper = document.querySelector(".carousel-wrapper");
 
-//     // Map slide index to a date string
-//     switch (currentIndex) {
-//       case 0:
-//         date = "2024-01-01";
-//         break;
-//       case 1:
-//         date = "2024-02-01";
-//         break;
-//       case 2:
-//         date = "2024-03-01";
-//         break;
-//       default:
-//         date = "Unknown Date";
-//         break;
-//     }
+document.querySelector(".next").addEventListener("click", () => {
+  moveToNextSlide();
+});
 
-//     // Send the new date to the server via GET request
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("GET", "update_date.php?date=" + encodeURIComponent(date), true);
-//     xhr.onload = function () {
-//       if (xhr.status === 200) {
-//         // Update the result element with the server response
-//         document.getElementById("result").textContent = xhr.responseText;
-//       } else {
-//         console.error("Error updating date");
-//       }
-//     };
-//     xhr.send();
-// }) 
+document.querySelector(".prev").addEventListener("click", () => {
+  moveToPreviousSlide();
+});
+
+function moveToNextSlide() {
+  if (currentIndex < totalImages - 1) {
+    currentIndex++;
+    updateCarousel();
+  }
+
+  // Pokud jsme na duplikovaném prvním obrázku, rychle se přesuneme na skutečný první obrázek
+  if (currentIndex === totalImages - 1) {
+    setTimeout(() => {
+      wrapper.style.transition = "none"; // Zrušíme přechod
+      currentIndex = 1; // Skutečný první obrázek
+      updateCarousel();
+      setTimeout(() => {
+        wrapper.style.transition = "transform 1s ease"; // Obnovíme přechod
+      }, 50); // Malé zpoždění pro plynulý efekt
+    }, 1000); // Čas odpovídající délce přechodu (1s)
+  }
+}
+
+function moveToPreviousSlide() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateCarousel();
+  }
+
+  // Pokud jsme na duplikovaném posledním obrázku, rychle se přesuneme na skutečný poslední obrázek
+  if (currentIndex === 0) {
+    setTimeout(() => {
+      wrapper.style.transition = "none"; // Zrušíme přechod
+      currentIndex = totalImages - 2; // Skutečný poslední obrázek
+      updateCarousel();
+      setTimeout(() => {
+        wrapper.style.transition = "transform 1s ease"; // Obnovíme přechod
+      }, 50); // Malé zpoždění pro plynulý efekt
+    }, 1000); // Čas odpovídající délce přechodu (1s)
+  }
+}
+
+function updateCarousel() {
+  const offset = -currentIndex * 800; // Posun podle aktuálního indexu (šířka obrázku)
+  wrapper.style.transform = `translateX(${offset}px)`;
+}
