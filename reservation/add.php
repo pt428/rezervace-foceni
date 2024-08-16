@@ -4,6 +4,8 @@ session_start();
 
 // Nastavte zprávu
 $_SESSION['message'] = 'Rezervace byla úspěšně vytvořena.';
+   unset($_SESSION['openReservation']);  
+
 require_once "../database/Database.php";
 require_once "./Reservation.php";
  echo $_GET["dateOfReservation"] ."<br>" ;
@@ -30,7 +32,8 @@ $reservation = new Reservation(
   $_GET["numberOfAdults"],
   $_GET["numberOfChildren"] ,
   false,
-  $_GET["note"]  
+  $_GET["note"]  ,
+  ""
 );
 $reservation->insertToDB();
 header("Location: ../index.php");

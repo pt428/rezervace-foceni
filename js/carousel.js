@@ -1,8 +1,13 @@
-let currentIndex = 1; // Startujeme na prvním obrázku (po duplikátu posledního)
+
+let currentIndex =1;
+if( sessionStorage.getItem("slide") != null ){
+currentIndex=sessionStorage.getItem("slide");
+} 
+
 const images = document.querySelectorAll(".carousel img");
 const totalImages = images.length;
 const wrapper = document.querySelector(".carousel-wrapper");
-
+ 
 document.querySelector(".next").addEventListener("click", () => {
   moveToNextSlide();
 });
@@ -48,8 +53,19 @@ function moveToPreviousSlide() {
     }, 1000); // Čas odpovídající délce přechodu (1s)
   }
 }
+function updateCarouselWithoutSlide() {
+ 
+  sessionStorage.setItem("slide", currentIndex);
 
-function updateCarousel() {
   const offset = -currentIndex * 800; // Posun podle aktuálního indexu (šířka obrázku)
   wrapper.style.transform = `translateX(${offset}px)`;
+  
+}
+function updateCarousel() {
+ 
+   sessionStorage.setItem("slide", currentIndex);
+ 
+  const offset = -currentIndex * 800; // Posun podle aktuálního indexu (šířka obrázku)
+   wrapper.style.transform = `translateX(${offset}px)`;
+     
 }

@@ -56,26 +56,7 @@ require_once __DIR__ . '/../reservation/Reservation.php';
         return false; // Pokud došlo k chybě
     }
         }
-        // public function getReservationById($id){
-        //     try {
-        //             // SQL dotaz pro výběr všech rezervací
-        //             $sql = "SELECT * FROM reservations WHERE id=:id";
-        //             $connection=$this->connectDB();
-        //             // Příprava dotazu
-        //             $stmt = $connection->prepare($sql);
-                    
-        //             $stmt->execute(['id' => $id]);
-
-        //             //  Fetch the result
-        //             $reservation = $stmt->fetch();
-
-                    
-        //             return $reservation;
-
-        //         } catch (PDOException $e) {
-        //             echo "Error fetching reservations: " . $e->getMessage();
-        //         }
-        // }
+        
     
     }
     

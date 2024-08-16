@@ -1,3 +1,15 @@
+<?php  
+require "Reservation.php";
+require "../database/Database.php";
+$reservation = new Reservation();
+$reservation->dateOfReservation= $_POST["date"] ;
+$reservation->timeRange=$_POST["timeRange"];
+$date = new DateTime(); // Vytvoří aktuální datum a čas 
+$reservation->blockingTime=  $date->format('d-m-Y H:i:s');
+$reservation->insertToDB();
+        session_start();
+  $_SESSION['openReservation'] =$reservation->id;  ;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,15 +23,19 @@
 
 <body>
     <div class="container" style="width:40rem">
+        <div class="alert alert-success timer" role="alert">
+            Rezervace je držena po dobu <span id="countdown"></span>
+        </div>
         <form action="add.php" method="get">
+            <input type="text" name="id" value="<?php echo $reservation->id?>"   >
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-date">Datum</span>
-                <input type="text" value="<?php echo $_GET["date"] ; ?>" class="form-control" name="dateOfReservation"
+                <input type="text" value="<?php echo $_POST["date"] ; ?>" class="form-control" name="dateOfReservation"
                     aria-describedby="input-date" readonly required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-time-range">Čas</span>
-                <input type="text" value="<?php echo $_GET["timeRange"] ; ?>" class="form-control" name="timeRange"
+                <input type="text" value="<?php echo $_POST["timeRange"] ; ?>" class="form-control" name="timeRange"
                     aria-describedby="input-time-range" readonly required>
             </div>
             <div class="input-group mb-3">
@@ -43,13 +59,13 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-number-of-photos">Počet fotek</span>
-                <input type="number" value="5" step="5"  min="5" max="10" class="form-control" name="numberOfPhotos"
-                     aria-describedby="input-number-of-photos" required>
+                <input type="number" value="5" step="5" min="5" max="10" class="form-control" name="numberOfPhotos"
+                    aria-describedby="input-number-of-photos" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-number-of-dogs">Počet focených psů</span>
                 <input type="number" value="0" min="0" max="2" class="form-control" name="numberOfDogs"
-                     aria-describedby="input-number-of-dogs" required>
+                    aria-describedby="input-number-of-dogs" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-number-of-adults">Počet focených dospělých</span>
@@ -72,3 +88,4 @@
 </body>
 
 </html>
+<script src="../js/countdown.js"></script>

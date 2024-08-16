@@ -15,9 +15,9 @@ class Reservation{
     public $approved;
     public  $note;
     public $connection;
+    public $blockingTime;
  
-    public function __construct(
-         
+    public function __construct(         
         $dateOfReservation="",
         $timeRange="",
         $firstName="",
@@ -29,7 +29,8 @@ class Reservation{
         $numberOfAdults=0,
         $numberOfChildren=0,
         $approved=false,
-        $note="") {
+        $note="",
+        $blockingTime="") {
 
                 $this->dateOfReservation=$dateOfReservation;
                 $this->timeRange= $timeRange;
@@ -45,8 +46,7 @@ class Reservation{
                 $this->note=$note;
                 $db=new Database();
                 $this->connection=$db->connectDB();
-               
-
+                $this->blockingTime=$blockingTime;       
     }
  
         public function insertToDB(){          
@@ -63,7 +63,8 @@ class Reservation{
                     number_of_adult,
                     number_of_children,
                     approved,
-                    note) 
+                    note,
+                    blocking_time) 
                     VALUES (
                     :dateOfReservation,
                     :timeRange,
@@ -76,7 +77,8 @@ class Reservation{
                     :numberOfAdults,
                     :numberOfChildren,
                     :approved,
-                    :note)";
+                    :note,
+                    :blockingTime)";
 
             $stmt=$this->connection->prepare($sql);
             $stmt->bindValue(":dateOfReservation",$this->dateOfReservation,PDO::PARAM_STR);
@@ -91,10 +93,11 @@ class Reservation{
             $stmt->bindValue(":numberOfChildren",$this->numberOfChildren,PDO::PARAM_INT);
             $stmt->bindValue(":approved",$this->approved,PDO::PARAM_BOOL);
             $stmt->bindValue(":note",$this->note,PDO::PARAM_STR);
-               
+            $stmt->bindValue(":blockingTime",$this->blockingTime,PDO::PARAM_STR);
                 try {
                     if($stmt->execute()){
                         $id=$this->connection->lastInsertId();
+                        $this->id=$id;
                         return $id;
                     }else{
                         throw new Exception("Uložení dat do databaze selhalo");
@@ -121,7 +124,8 @@ public function updateInDB(){
             number_of_adult = :numberOfAdults,
             number_of_children = :numberOfChildren,
             approved = :approved,
-            note = :note
+            note = :note,
+            blocking_time=:blockingTime
         WHERE id = :id";        
      
             $stmt = $this->connection->prepare($sql);       
@@ -138,6 +142,7 @@ public function updateInDB(){
             $stmt->bindParam(':numberOfChildren', $this->numberOfChildren);
             $stmt->bindParam(':approved', $this->approved);
             $stmt->bindParam(':note', $this->note);
+             $stmt->bindParam(':blockingTime', $this->blockingTime);
            $stmt->execute();
              return true;
 
@@ -168,6 +173,7 @@ public function getReservationById($id) {
             $this->numberOfChildren = $reservation['number_of_children'];
             $this->approved = $reservation['approved'];
             $this->note = $reservation['note'];
+            $this->note = $reservation['blocking_time'];
             return $this; // Vrátí instanci této třídy s načtenými daty
         } else {
             return null; // Pokud rezervace není nalezena, vrátí null
