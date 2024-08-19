@@ -56,8 +56,22 @@ require_once __DIR__ . '/../reservation/Reservation.php';
         return false; // Pokud došlo k chybě
     }
         }
-        
-    
+  
+       public function checkAviability($date,$time){
+        $sql =  'SELECT COUNT(*) FROM reservations WHERE date_of_reservation=:dateOfReservation AND time_range = :timeRange' ;
+        $connection=$this->connectDB();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['dateOfReservation' => $date,'timeRange' => $time]);
+        return $stmt->fetchColumn();
+       }
+
+       public function checkLoginData($login,$password){
+        $sql =  'SELECT * FROM admin WHERE login=:login AND password = :password' ;
+        $connection=$this->connectDB();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(['login' => $login,'password' => $password]);
+        return $stmt->fetchColumn();
+       }
     }
     
 

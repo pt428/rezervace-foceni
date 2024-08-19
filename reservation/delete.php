@@ -12,6 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo  $post_id ;
     $db= new Database();
  $db->delete($post_id);
-header("Location: ../index.php");
+header("Location: ../reservation/showall.php");
 exit; 
 }

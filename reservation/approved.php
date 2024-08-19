@@ -15,8 +15,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reservation = new Reservation();
     $reservation->getReservationById($post_id);
     $reservation->approved=true;
-   echo $reservation->updateInDB();
-    header("Location: ../index.php");
+   if($reservation->updateInDB()){
+     if($reservation->sendEmail(true)==""){
+         $_SESSION['message'] = 'Rezervace byla schválena. Email byl odeslán.';
+
+    }else{
+    $_SESSION['message'] = 'Rezervace byla schválena.';
+    $_SESSION['warning'] = 'Nastal problém při odesílání emailu s QR kódem.';
+    }
+   }else{
+    $_SESSION['warning'] = 'Nastal problem při schválení rezervace.';
+}
+    header("Location: ./showall.php");
 exit; 
 }
  

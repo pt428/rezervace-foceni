@@ -1,4 +1,4 @@
-body {
+html,body {
     /* background: 
         linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url('../images/pozadi.png') no-repeat center center/cover;
@@ -6,10 +6,44 @@ body {
         background-position: center;
         background-repeat: no-repeat;
         background-attachment:fixed ;
-    height: 100vh;
-    margin: 0; */
+        font-family: Raleway Flex, Raleway-Fallback, Apple Color Emoji, Noto Color Emoji, sans-serif;
+        */
+        margin: 0; 
+        height: 100vh;
+          display: flex;
+            flex-direction: column;
+     
 }
- 
- img{
-    max-width: 60%;
- }
+.container{
+  flex: 1;
+}
+  .navbar-brand{
+      font-size: 1.5625rem;
+      margin-left: 2rem ;
+      margin-top: 0.6rem;
+      font-weight: -100;
+  }
+  .nav-link {
+   
+    padding-left: 1.7rem !important;
+  }
+  h1 ,h4{
+    color: black;
+  }
+  .footer{
+    height: 5rem;
+    background-color: #1976d2;
+    margin-top: 1rem;
+  }
+  .nav-link.active{
+    color:#1976d2 !important ;
+    font-weight: bold;
+    
+  }
+
+ @media (max-width: 450px) {
+    .text-xs {
+      margin-left: 0;
+      font-size: 1.16rem; /* nebo jakákoliv jiná velikost, kterou potřebujete */
+    }
+  }

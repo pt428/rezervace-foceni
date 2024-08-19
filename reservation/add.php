@@ -1,40 +1,53 @@
 <?php
-// Spusťte session
+ 
 session_start();
 
-// Nastavte zprávu
-$_SESSION['message'] = 'Rezervace byla úspěšně vytvořena.';
    unset($_SESSION['openReservation']);  
 
 require_once "../database/Database.php";
 require_once "./Reservation.php";
- echo $_GET["dateOfReservation"] ."<br>" ;
- echo $_GET["timeRange"] ."<br>"  ;
-echo $_GET["firstName"]  ."<br>" ;
-echo $_GET["secondName"]  ."<br>" ;
-echo $_GET["email"]  ."<br>" ;
-echo $_GET["phone"]  ."<br>" ;
-echo $_GET["numberOfPhotos"]  ."<br>" ;
-echo $_GET["numberOfDogs"]  ."<br>" ;
-echo $_GET["numberOfAdults"]  ."<br>" ;
-echo $_GET["numberOfChildren"]  ."<br>" ;
-echo $_GET["note"] ;
+
+echo $_POST["dateOfReservation"] ."<br>" ;
+echo $_POST["timeRange"] ."<br>"  ;
+echo $_POST["firstName"]  ."<br>" ;
+echo $_POST["secondName"]  ."<br>" ;
+echo $_POST["email"]  ."<br>" ;
+echo $_POST["phone"]  ."<br>" ;
+echo $_POST["numberOfPhotos"]  ."<br>" ;
+echo $_POST["numberOfDogs"]  ."<br>" ;
+echo $_POST["numberOfAdults"]  ."<br>" ;
+echo $_POST["numberOfChildren"]  ."<br>" ;
+echo $_POST["note"] ;
  
 $reservation = new Reservation(
-  $_GET["dateOfReservation"] ,
-  $_GET["timeRange"] ,
-  $_GET["firstName"]  ,
-  $_GET["secondName"] ,
-  $_GET["email"] ,
-  $_GET["phone"],
-   $_GET["numberOfPhotos"] ,
-  $_GET["numberOfDogs"]  ,
-  $_GET["numberOfAdults"],
-  $_GET["numberOfChildren"] ,
+
+  $_POST["dateOfReservation"] ,
+  $_POST["timeRange"] ,
+  $_POST["firstName"]  ,
+  $_POST["secondName"] ,
+  $_POST["email"] ,
+  $_POST["phone"],
+   $_POST["numberOfPhotos"] ,
+  $_POST["numberOfDogs"]  ,
+  $_POST["numberOfAdults"],
+  $_POST["numberOfChildren"] ,
   false,
-  $_GET["note"]  ,
+  $_POST["note"]  ,
   ""
 );
-$reservation->insertToDB();
-header("Location: ../index.php");
+$reservation->id=$_POST["id"];
+$successText='Rezervace na datum '.$reservation->dateOfReservation.' a čas '.$reservation->timeRange.' byla úspěšně vytvořena.';
+if($reservation->updateInDB()){
+  
+  if($reservation->sendEmail(false)==""){
+    $_SESSION['message'] = $successText.' Email byl odeslán.';
+  }else{
+    $_SESSION['message'] = $successText;
+    $_SESSION['warning'] = 'Nastal problém při odesílání emailu.';
+  }
+
+}else{
+  $_SESSION['warning'] = 'Nastal problem při vytvoření rezervace.';
+}
+header("Location: ../main/index.php");
 exit; 

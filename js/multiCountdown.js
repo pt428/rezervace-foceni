@@ -33,7 +33,7 @@ function startCountdown(targetDate, elementId) {
       // Pokud odpočítávání skončilo, zastav interval
       if (distance <0) {
         clearInterval(interval);
-        document.getElementById(elementId).innerHTML = "EXPIRED";
+       location.reload(true);
       }
     if (distance < 0 && distance >-1000) {
       // Reload the page, forcing the reload from the server

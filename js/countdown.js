@@ -21,15 +21,15 @@ function updateCountdown() {
   // Pokud odpočet dosáhne nuly, zastavíme časovač a přesměrujeme na index.php
   if (countdownTime < 0) {
     clearInterval(countdownInterval);
-    window.location.href = "../index.php"; // Přesměrování na index.php
+    window.location.href = "../main/index.php"; // Přesměrování na index.php
   }
 }
 
 // Funkce pro kontrolu obnovy stránky
 window.onload = function () {
-  // Kontrola, jestli byla stránka obnovena
+  
   if (performance.navigation.type === 1) {
-    window.location.href = "../index.php"; // Přesměrování na index.php při obnově stránky
+    window.location.href = "../main/index.php"; // Přesměrování na index.php při obnově stránky
   }
 };
 

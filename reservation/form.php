@@ -1,33 +1,33 @@
 <?php  
 require "Reservation.php";
 require "../database/Database.php";
-$reservation = new Reservation();
-$reservation->dateOfReservation= $_POST["date"] ;
-$reservation->timeRange=$_POST["timeRange"];
-$date = new DateTime(); // Vytvoří aktuální datum a čas 
-$reservation->blockingTime=  $date->format('d-m-Y H:i:s');
-$reservation->insertToDB();
-        session_start();
-  $_SESSION['openReservation'] =$reservation->id;  ;
-?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rezervační formulař</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+$db=new Database();
+if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {     
+    $_SESSION["warning"]="Někdo zrovna daný termín rezervuje";
+    header('Location: chooseTime.php?date=' . $_POST['date']);
+    exit;
+}
+   $reservation = new Reservation();
+        $reservation->dateOfReservation= $_POST["date"] ;
+        $reservation->timeRange=$_POST["timeRange"];
+        $date = new DateTime(); // Vytvoří aktuální datum a čas 
+        $reservation->blockingTime=  $date->format('d-m-Y H:i:s');
+        $reservation->insertToDB();
+        
+        $_SESSION['openReservation'] =$reservation->id;  
+        require "../layout/header.php";
+        ?>
+ 
 
-<body>
+ 
     <div class="container" style="width:40rem">
+        <h1 class="text-center">Rezervační formulář</h1>
         <div class="alert alert-success timer" role="alert">
             Rezervace je držena po dobu <span id="countdown"></span>
         </div>
-        <form action="add.php" method="get">
-            <input type="text" name="id" value="<?php echo $reservation->id?>"   >
+        <form action="add.php" method="post">
+            <input type="text" name="id" value="<?php echo $reservation->id?>"  hidden >
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-date">Datum</span>
                 <input type="text" value="<?php echo $_POST["date"] ; ?>" class="form-control" name="dateOfReservation"
@@ -82,10 +82,13 @@ $reservation->insertToDB();
                 <textarea type="text" maxlength="490" class="form-control" name="note" aria-label="Note"
                     aria-describedby="input-note"></textarea>
             </div>
-            <input type="submit">
+            <button class="btn btn-success w-100" type="submit">Odeslat</button>
         </form>
     </div>
-</body>
+ <?php
+require "../layout/footer.php";
+?>
+
 
 </html>
 <script src="../js/countdown.js"></script>
