@@ -6,7 +6,7 @@ session_start();
 
 require_once "../database/Database.php";
 require_once "./Reservation.php";
-
+echo $_POST["id"];
 echo $_POST["dateOfReservation"] ."<br>" ;
 echo $_POST["timeRange"] ."<br>"  ;
 echo $_POST["firstName"]  ."<br>" ;
@@ -31,7 +31,7 @@ $reservation = new Reservation(
   $_POST["numberOfDogs"]  ,
   $_POST["numberOfAdults"],
   $_POST["numberOfChildren"] ,
-  false,
+  0,
   $_POST["note"]  ,
   ""
 );
@@ -49,5 +49,5 @@ if($reservation->updateInDB()){
 }else{
   $_SESSION['warning'] = 'Nastal problem při vytvoření rezervace.';
 }
-header("Location: ../main/index.php");
+  header("Location: ../main/index.php");
 exit; 

@@ -1,7 +1,7 @@
 <?php  
 require "../layout/header.php";
 require "../database/Database.php";
-session_start(); 
+ 
 
         ?>
 

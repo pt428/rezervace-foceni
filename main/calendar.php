@@ -132,9 +132,28 @@
                 </div>
                 <?php  if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true):?>
                     <div class="col p-0 ">
+                        <button class='btn btn-danger w-100' data-bs-toggle="modal" data-bs-target="#deleteModal-<?php echo $idOfReservation?>">SMAZAT</button>
                         <form action="../reservation/delete.php" method="post">
                             <input type="text" name="id" value="<?php echo $idOfReservation?>" hidden>
-                            <button class='btn btn-danger w-100'>SMAZAT</button>
+                        <!-- Modal -->
+                                <div class="modal fade" id="deleteModal-<?php echo $idOfReservation?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p>Opravdu chcete rezervaci smazat?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ne</button>
+                                        <button type="submit" type="button" class="btn btn-primary">Ano</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!-- modal end -->
                         </form>
                     </div>
                 <?php endif;?>
@@ -153,6 +172,7 @@
 
 </div>
 <hr>    
+ 
        <?php 
     } 
     ?>

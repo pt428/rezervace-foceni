@@ -51,8 +51,7 @@ class Reservation{
     }
  
         public function insertToDB(){          
-            $sql="INSERT 
-                    INTO reservations (
+            $sql="INSERT INTO reservations (
                     date_of_reservation,
                     time_range,
                     first_name,

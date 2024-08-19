@@ -9,7 +9,7 @@
 ?>
   
 <main>
-
+    <div class="container" style="max-width:50rem;"></div>
     <h1 class="text-center ">Vánoční focení 2024</h1>
     <h4 class="text-center mt-2">Datum: <?php echo $date; ?></h4>
     <!-- <h5 class="text-center  ">Časy k zarezervování</h5> -->
@@ -36,4 +36,4 @@
 </main>
 
 <?php require "../layout/footer.php";?>
-<!-- <script src="../js/checkDbChanges.js"></script> -->
+ 

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db= new Database();
     $reservation = new Reservation();
     $reservation->getReservationById($post_id);
-    $reservation->approved=true;
+    $reservation->approved=1;
    if($reservation->updateInDB()){
      if($reservation->sendEmail(true)==""){
          $_SESSION['message'] = 'Rezervace byla schválena. Email byl odeslán.';
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }else{
     $_SESSION['warning'] = 'Nastal problem při schválení rezervace.';
 }
-    header("Location: ./showall.php");
+    header("Location: ./showAll.php");
 exit; 
 }
  
