@@ -1,9 +1,9 @@
 <?php require "../layout/header.php";?>
  
-<div class="container m-5">
+<div class="container">
   <div class="row" id="masonry-grid">
    <?php
-$directory = '../images/';  // Cesta k vašej zložke s obrázkami
+$directory = '../imagesSluzby/';  // Cesta k vašej zložke s obrázkami
 $images = glob($directory . "*.{jpg,jpeg,png,gif,|JPEG,JPG,PNG,GIF}", GLOB_BRACE);  // Načíta všetky obrázky s koncovkami jpg, jpeg, png, gif
 
 foreach ($images as $image) {?>

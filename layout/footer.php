@@ -1,8 +1,8 @@
 </div>
 <footer>
 
-    <div class="footer d-flex    align-items-center text-white">
-        <div class="ms-5">
+    <div class="footer  d-flex    align-items-center text-white">
+        <div class="container">
     
             <div class="col">© 2023 Všechna práva vyhrazena</div>
             <div class="col">BARBORA CROMČÁKOVÁ</div>
