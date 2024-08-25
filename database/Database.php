@@ -3,10 +3,12 @@ require_once __DIR__ . '/../reservation/Reservation.php';
     class Database {
         
         public function connectDB(){
-            $db_host = "localhost";
-            $db_name = "rezervace_foceni";
-            $db_user = "root";
-            $db_password="";
+            require "../data/databaseData.php";
+        
+            $db_host = $dbHost;
+            $db_name = $dbName;
+            $db_user =  $dbUser;
+            $db_password=$dbPassword;
 
             $connection = "mysql:host=" . $db_host . ";dbname=" . $db_name . ";charset=utf8";
 
