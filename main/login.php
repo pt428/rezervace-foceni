@@ -26,7 +26,7 @@ require "../database/Database.php";
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="input-password">Heslo</span>
-            <input type="text" class="form-control" name="password" aria-describedby="input-password" required>
+            <input type="password" class="form-control" name="password" aria-describedby="input-password" required>
         </div>
 
         <button class="btn btn-success w-100" type="submit">Přihlásit</button>

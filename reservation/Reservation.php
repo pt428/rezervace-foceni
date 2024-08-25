@@ -210,10 +210,10 @@ public function getReservationById($id) {
                 // Připojení QR kódu jako inline obrázku
                 $mail->addEmbeddedImage("../qrcode/qrcode.png", 'qrcode', 'qrcode.png');
                 $mail->addAttachment('../qrcode/qrcode.png' );   
-                $mail->Body    = "Dobrý den,\nVaše rezervace byla schválena, zaplaťte prosím částku xxxKč do dvou dnů, zde je QR kód:".'<br><img src="cid:qrcode">\nS pozdravem Barbora Chromčáková';
+                $mail->Body    = "Dobrý den,<br>Vaše rezervace byla schválena, zaplaťte prosím částku xxxKč do dvou dnů, zde je QR kód:".'<br><img src="cid:qrcode"><br><br>S pozdravem Barbora Chromčáková';
             }else{
                   $mail->Subject = "Rezervace - vánoční focení";
-                $mail->Body = "Dobrý den, \nVaše rezervace na \njméno: ".$this->firstName." ". $this->secondName."\nden: ".$this->dateOfReservation. "\nčas: ".$this->timeRange ."\nbyla zaznamenána a čeká na schválení.\nPotvrzení rezervace Vám příjde do emailu během 24 hodin.\nS pozdravem Barbora Chromčáková";
+                $mail->Body = "Dobrý den, \nVaše rezervace na \nJméno: ".$this->firstName." ". $this->secondName."\nDen: ".$this->dateOfReservation. "\nČas: ".$this->timeRange ."\nbyla zaznamenána a čeká na schválení.\nPotvrzení rezervace Vám příjde do emailu během 24 hodin.\n\nS pozdravem Barbora Chromčáková";
             }
             $mail->send();
 

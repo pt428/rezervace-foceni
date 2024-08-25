@@ -56,7 +56,7 @@
                         </li>
                         <?php else:?>
                         <li>
-                            <a class="nav-link " href="../main/login.php">Login</a>
+                            <a class="nav-link " href="../main/login.php">Přihlášení</a>
                         </li>
                         <?php endif;?>
                     </ul>
