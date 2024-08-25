@@ -7,6 +7,7 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
   $db=new Database();
   $reservations= $db->getAllReservations();
   $captionText="Seznam rezervací";
+  $dateOfReservation="";
   if(count($reservations)==0) $captionText="Nejsou žádné rezervace";
   ?>
 <div class='container    justify-content-center align-items-center'>
@@ -22,7 +23,48 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
             <?php echo $_SESSION['warning'] ;?>
         </div>
         <?php   unset($_SESSION['warning']);}?>
-    <?php foreach ($reservations as $reservation){?>
+        <?php 
+        $dates =   []; 
+      echo "<div class='d-flex justify-content-center'>";
+            foreach ($reservations as $reservation){             
+                      if (!in_array($reservation['date_of_reservation'], $dates)) {
+                              $dates[]=$reservation['date_of_reservation'];                            
+                        }              
+                }
+                if(count($dates )>1){
+                  foreach($dates as $date){
+                      if(!(isset($_GET["date"]) && $date== $_GET["date"])){   
+                          echo '<a class="btn btn-primary m-1" href="showAll.php?date='.$date.'">Zobrazit '.$date."</a>  ";
+                      }
+                  }
+                }
+          if(isset($_GET["date"])) echo '<a class="btn btn-danger m-1" href="showAll.php">Zrušit filtr</a>';
+            echo "</div>";
+      ?>
+      
+    <?php 
+                usort($reservations, function($a, $b) {
+                // Extrahování časů z timeRange
+                $timeA = explode(' - ', $a['time_range'])[0];
+                $timeB = explode(' - ', $b['time_range'])[0];
+                
+                // Převod časů na časové razítko pro snadné porovnání
+                $timeStampA = strtotime($timeA);
+                $timeStampB = strtotime($timeB);
+                
+                // Porovnání časových razítek
+                return $timeStampA - $timeStampB;
+            });
+    
+    
+    
+    
+    foreach ($reservations as $reservation){
+      if(isset($_GET["date"]) &&  $reservation['date_of_reservation']!= $_GET["date"]){
+        continue;
+      }
+      ?>
+      
     <div class="row bg-light p-2 m-1 rounded-3">
 
         <div class='col-6 '>

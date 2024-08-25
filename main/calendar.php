@@ -1,8 +1,9 @@
    <?php
    require "../database/Database.php";    
    function generateTimeSchedule($date){ ?>
-
+ 
    <div class="row justify-content-center align-items-center m-0  " style="width: 50rem;">
+    <a class="btn btn-secondary" href="../main/index.php">Zpět</a>
        <?php  $time = new DateTime('10:00'); 
                $timerNumber=0;
                 $db=new Database();
@@ -50,14 +51,17 @@
                                                      $interval->i * 60 + 
                                                      $interval->s;
                                                      $deleteReservation=false;
+                                            
                                                      if(isset($_SESSION['openReservation']) && $idOfReservation==$_SESSION['openReservation']){
                                                         $deleteReservation=true;
+                                                         unset($_SESSION['openReservation']);  
                                                      }
-                                                 if($seconds>=60 || $deleteReservation){
+                                                 if($seconds>=600 || $deleteReservation){//nastaveni odectu 1/3
                                                     $db=new Database();
                                                     $db->delete($idOfReservation);
                                                     $timeRangeOfReservation="";
-                                                $blockingTime="";}
+                                                    $blockingTime="";
+                                                }
                                           }
                                 }   
                              } 
@@ -66,7 +70,6 @@
                 ?>
                 <?php  if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true):?>
                     <div class="col-md p-0 ">
-
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">

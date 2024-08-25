@@ -1,7 +1,8 @@
  
 <?php 
  
- require "../layout/header.php"; 
+ require "../layout/header.php";
+    require "../main/calendar.php";  
  $date;
  if(isset($_GET["date"])){
     $date=$_GET["date"];
@@ -9,14 +10,16 @@
 ?>
   
 <main>
-    <div class="container" style="max-width:50rem;"></div>
+    <div class="container" style="max-width:50rem;"> 
     <h1 class="text-center ">Vánoční focení 2024</h1>
     <h4 class="text-center mt-2">Datum: <?php echo $date; ?></h4>
     <!-- <h5 class="text-center  ">Časy k zarezervování</h5> -->
+    
+    
+    
+    
+    
     <?php  
-        require "../main/calendar.php";        
-      
-          
         if (isset($_SESSION['message'])) {?>
             <div class="alert alert-success" role="alert">
                 <?php echo   $_SESSION['message'] ;?>
@@ -27,8 +30,7 @@
                 <?php echo   $_SESSION['warning'] ;?>
             </div>
             <?php   unset($_SESSION['warning']);}?>
-
-    <div class="d-flex  justify-content-center align-items-center ">
+            <div class="d-flex  justify-content-center align-items-center ">
         <?php  generateTimeSchedule($date); ?>
     </div>
 

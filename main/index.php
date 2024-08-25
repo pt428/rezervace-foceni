@@ -1,11 +1,11 @@
 <?php 
 include "../layout/header.php"; 
  
-$buttonText=["Datum: ","Kliknutím vybere čas focení"];
+$buttonText=["Datum: ","Zde si zarezervujete čas focení"];
 $dates=["9.12.2024","10.12.2024","11.12.2024"];
 ?>
  
-<main>
+
 <div class="container" style="max-width:40rem">
         <h1 class="text-center ">Vánoční focení 2024</h1>
         <?php        
@@ -49,17 +49,17 @@ $dates=["9.12.2024","10.12.2024","11.12.2024"];
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev"  >
+        <span class="carousel-control-prev-icon "></span>
+        <span class="visually-visible">Předchozí</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+        <span class="visually-visible">Další</span>
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
       </button>
     </div>
     </div>
-</main>
+
   
 
 <?php include "../layout/footer.php";?>

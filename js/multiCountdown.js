@@ -4,7 +4,7 @@ function startCountdown(targetDate, elementId) {
     const interval = setInterval(() => {
       // Získání aktuálního času a rozdílu od cílového času
       const now = new Date().getTime();
-        const maxTime_ms = 60000;
+        const maxTime_ms = 600000;
       // Split the date and time
       const [datePart, timePart] = targetDate.split(" ");
 

@@ -4,8 +4,15 @@
     <div class="footer  d-flex    align-items-center text-white">
         <div class="container">
     
-            <div class="col">© 2023 Všechna práva vyhrazena</div>
-            <div class="col">BARBORA CROMČÁKOVÁ</div>
+        <div class="col ">© <?php echo date("Y"); ?> Všechna práva vyhrazena</div> 
+        
+
+            <div class="col-sm col-12 d-flex  justify-content-start ">BARBORA CROMČÁKOVÁ</div>
+            <div class="col-sm col-12 d-flex  justify-content-start "><a class="text-white maker" href="https://pavel-tichy.cz/">Powered by pavel-tichy.cz</a></div>
+       
+ 
+            
+            
         </div> 
     </div>
 </footer>

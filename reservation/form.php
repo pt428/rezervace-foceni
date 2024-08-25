@@ -1,7 +1,7 @@
 <?php  
 require "Reservation.php";
 require "../database/Database.php";
-
+  require "../layout/header.php";
 $db=new Database();
 if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {     
     $_SESSION["warning"]="Někdo zrovna daný termín rezervuje";
@@ -16,16 +16,18 @@ if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {
         $reservation->insertToDB();
         
         $_SESSION['openReservation'] =$reservation->id;  
-        require "../layout/header.php";
+ 
+        
         ?>
  
 
  
-    <div class="container" style="width:40rem">
+    <div class="container" style="max-width:40rem">
         <h1 class="text-center">Rezervační formulář</h1>
         <div class="alert alert-success timer" role="alert">
             Rezervace je držena po dobu <span id="countdown"></span>
         </div>
+          <a class="btn btn-secondary w-100" href="chooseTime.php?date=<?php echo $_POST["date"] ?>">Zpět</a>
         <form action="add.php" method="post">
             <input type="text" name="id" value="<?php echo $reservation->id?>"  hidden >
             <div class="input-group mb-3">
@@ -82,7 +84,7 @@ if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {
                 <textarea type="text" maxlength="490" class="form-control" name="note" aria-label="Note"
                     aria-describedby="input-note"></textarea>
             </div>
-            <button class="btn btn-success w-100" type="submit">Odeslat</button>
+            <button class="btn btn-success w-100 mb-2" type="submit">Odeslat</button>
         </form>
     </div>
  <?php

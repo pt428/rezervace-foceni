@@ -1,13 +1,16 @@
 <?php require "../layout/header.php";?>
 
-<div class="container m-5">
-    <div class="contact">
+<div class="container ">
+    <div class="row ps-sm-5  ">
         <h2 class="contact-label">Kontaktujte mě</h2>
-        <p class="contact-text"><i class="bi bi-geo-alt"></i><span class="h2-text ms-2">moravskoslezký kraj</span></p>
-        <p class="contact-text"><i class="bi bi-telephone-inbound"></i><span class="h2-text ms-2">703 353 464</span></p>
-        <p class="contact-text"><i class="bi bi-envelope"></i><span class="h2-text ms-2">barbora.chromcakova@seznam.cz</span></p>
-        <p class="contact-text"><i class="bi bi-instagram"></i><span class="h2-text ms-2">https://www.instagram.com/_photo.baru_/</span></p>
-    </div>
+        <div class="col-md-2 col-lg-3 xs-none"></div>
+        <div class="col-md-10 col-lg-9 ">
+            <p class="d-flex justify-content-start "><i class="bi bi-geo-alt me-2"></i><span class=" ">moravskoslezký kraj</span></p>
+            <p class="d-flex justify-content-start "><i class="bi bi-telephone-inbound me-2"></i><span class=" ">703 353 464</span></p>
+            <p class="d-flex justify-content-start "><i class="bi bi-envelope me-2"></i><span class=" ">barbora.chromcakova@seznam.cz</span></p>
+            <p class="d-flex justify-content-start "><i class="bi bi-instagram me-2"></i><span class=" ">https://www.instagram.com/_photo.baru_/</span></p>
+        </div>
+        </div>
 </div>
 
 

@@ -5,7 +5,7 @@ if(isset($_POST["login"]) && isset($_POST["password"])){
     session_start();
     if($db->checkLoginData($_POST["login"], $_POST["password"])>0){
         $_SESSION["admin"]=true;
-            header('Location: ../reservation/showall.php');
+            header('Location: ../reservation/showAll.php');
              exit;
     }else{
         session_start();

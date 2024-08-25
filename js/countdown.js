@@ -1,5 +1,5 @@
 // Doba odpočtu v sekundách (5 minut = 300 sekund)
-let countdownTime = 1* 60;
+let countdownTime = 600;
 
 // Funkce pro aktualizaci odpočtu
 function updateCountdown() {
@@ -17,7 +17,8 @@ function updateCountdown() {
 
   // Zkrátíme zbývající čas
   countdownTime--;
-
+ 
+  
   // Pokud odpočet dosáhne nuly, zastavíme časovač a přesměrujeme na index.php
   if (countdownTime < 0) {
     clearInterval(countdownInterval);
@@ -26,8 +27,7 @@ function updateCountdown() {
 }
 
 // Funkce pro kontrolu obnovy stránky
-window.onload = function () {
-  
+window.onload = function () {  
   if (performance.navigation.type === 1) {
     window.location.href = "../main/index.php"; // Přesměrování na index.php při obnově stránky
   }

@@ -5,7 +5,8 @@ require "../database/Database.php";
 
         ?>
 
-<div class="container" style="width:40rem">
+<div class="container" style="max-width:40rem">
+          <h1 class="text-center ">Přihlášení</h1>
     <?php          
     if (isset($_SESSION['message'])) {?>
     <div class="alert alert-success" role="alert">
