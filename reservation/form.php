@@ -15,13 +15,9 @@ if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {
         $reservation->blockingTime=  $date->format('d-m-Y H:i:s');
         $reservation->insertToDB();
         
-        $_SESSION['openReservation'] =$reservation->id;  
- 
+        $_SESSION['openReservation'] =$reservation->id; 
         
         ?>
- 
-
- 
     <div class="container" style="max-width:40rem">
         <h1 class="text-center">Rezervační formulář</h1>
         <div class="alert alert-success timer" role="alert">
@@ -59,11 +55,12 @@ if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {
                 <input type="tel" class="form-control" name="phone" aria-label="Phone" aria-describedby="input-phone"
                     required>
             </div>
-            <div class="input-group mb-3">
+            <!-- <div class="input-group mb-3">
                 <span class="input-group-text" id="input-number-of-photos">Počet fotek</span>
-                <input type="number" value="5" step="5" min="5" max="10" class="form-control" name="numberOfPhotos"
-                    aria-describedby="input-number-of-photos" required>
-            </div>
+                <input readonly  type="number" value="5"   class="form-control" name="numberOfPhotos"
+                    aria-describedby="input-number-of-photos" hidden>
+            </div> -->
+            <input    type="number" value="5"  name="numberOfPhotos"        hidden>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="input-number-of-dogs">Počet focených psů</span>
                 <input type="number" value="0" min="0" max="2" class="form-control" name="numberOfDogs"
@@ -84,7 +81,17 @@ if($db->checkAviability($_POST["date"], $_POST["timeRange"]) > 0) {
                 <textarea type="text" maxlength="490" class="form-control" name="note" aria-label="Note"
                     aria-describedby="input-note"></textarea>
             </div>
+            <hr>
+            <h4  class="text-end">Celkem 6 fotek za 499 Kč</h4>
+            <h6 class="text-end">Každa další fotka +50 Kč</h6>
+            <hr>
+            <h6 class="text-end text-danger"><i class="bi bi-exclamation-circle me-1 "></i>Předem se platí pouze rezervační záloha 200 Kč.</h6>
+            <h6 class="text-end"><i class="bi bi-info-circle me-1"></i>Platební údaje Vám příjdou emailem až po schválení rezervace.</h6>
+            <h6 class="text-end">Zbývající částku potom doplatíte až na místě.</h6>
+            <h6 class="text-end text-danger"><i class="bi bi-exclamation-circle me-1 "></i>Rezervaci lze zrušit nejpozději 4 dny před focením !</h6>
+            <hr>
             <button class="btn btn-success w-100 mb-2" type="submit">Odeslat</button>
+            <sup  class="text-end">Odesláním formuláře souhlasíte, aby provozovatel těchto stránek Barbora Chromčáková zpracovávala Vaše vypsané osobní údaje dle <a href="../pages/gdpr.php" target="_blank">GDPR</a> .</sup>
         </form>
     </div>
  <?php
@@ -92,5 +99,6 @@ require "../layout/footer.php";
 ?>
 
 
-</html>
+ 
 <script src="../js/countdown.js"></script>
+ 

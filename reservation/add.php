@@ -33,14 +33,15 @@ $reservation = new Reservation(
   $_POST["numberOfChildren"] ,
   0,
   $_POST["note"]  ,
-  ""
+  "",
+   0
 );
 $reservation->id=$_POST["id"];
 $successText='Rezervace na datum '.$reservation->dateOfReservation.' a čas '.$reservation->timeRange.' byla úspěšně vytvořena.';
 if($reservation->updateInDB()){
   
   if($reservation->sendEmail(false)==""){
-    $_SESSION['message'] = $successText.' Email byl odeslán.';
+    $_SESSION['message'] = $successText.' <br>Email byl odeslán.';
   }else{
     $_SESSION['message'] = $successText;
     $_SESSION['warning'] = 'Nastal problém při odesílání emailu.';

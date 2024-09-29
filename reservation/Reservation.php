@@ -17,6 +17,7 @@ class Reservation{
     public  $note;
     public $connection;
     public $blockingTime;
+    public $payment;
  
     public function __construct(         
         $dateOfReservation="",
@@ -31,7 +32,8 @@ class Reservation{
         $numberOfChildren=0,
         $approved=false,
         $note="",
-        $blockingTime="") {
+        $blockingTime="",
+        $payment=0) {
 
                 $this->dateOfReservation=$dateOfReservation;
                 $this->timeRange= $timeRange;
@@ -47,7 +49,8 @@ class Reservation{
                 $this->note=$note;
                 $db=new Database();
                 $this->connection=$db->connectDB();
-                $this->blockingTime=$blockingTime;       
+                $this->blockingTime=$blockingTime;  
+                $this->payment=$payment;     
     }
  
         public function insertToDB(){          
@@ -64,7 +67,8 @@ class Reservation{
                     number_of_children,
                     approved,
                     note,
-                    blocking_time) 
+                    blocking_time,
+                    payment) 
                     VALUES (
                     :dateOfReservation,
                     :timeRange,
@@ -78,7 +82,8 @@ class Reservation{
                     :numberOfChildren,
                     :approved,
                     :note,
-                    :blockingTime)";
+                    :blockingTime,
+                    :payment)";
 
             $stmt=$this->connection->prepare($sql);
             $stmt->bindValue(":dateOfReservation",$this->dateOfReservation,PDO::PARAM_STR);
@@ -94,6 +99,7 @@ class Reservation{
             $stmt->bindValue(":approved",$this->approved,PDO::PARAM_BOOL);
             $stmt->bindValue(":note",$this->note,PDO::PARAM_STR);
             $stmt->bindValue(":blockingTime",$this->blockingTime,PDO::PARAM_STR);
+              $stmt->bindValue(":payment",$this->payment,PDO::PARAM_INT);
                 try {
                     if($stmt->execute()){
                         $id=$this->connection->lastInsertId();
@@ -125,7 +131,8 @@ public function updateInDB(){
             number_of_children = :numberOfChildren,
             approved = :approved,
             note = :note,
-            blocking_time=:blockingTime
+            blocking_time=:blockingTime,
+            payment=:payment
         WHERE id = :id";        
      
             $stmt = $this->connection->prepare($sql);       
@@ -143,6 +150,7 @@ public function updateInDB(){
             $stmt->bindParam(':approved', $this->approved);
             $stmt->bindParam(':note', $this->note);
              $stmt->bindParam(':blockingTime', $this->blockingTime);
+              $stmt->bindParam(':payment', $this->payment);
            $stmt->execute();
              return true;
 
@@ -173,7 +181,8 @@ public function getReservationById($id) {
             $this->numberOfChildren = $reservation['number_of_children'];
             $this->approved = $reservation['approved'];
             $this->note = $reservation['note'];
-            $this->note = $reservation['blocking_time'];
+            $this->blockingTime = $reservation['blocking_time'];
+            $this->payment = $reservation['payment'];
             return $this; // Vrátí instanci této třídy s načtenými daty
         } else {
             return null; // Pokud rezervace není nalezena, vrátí null
@@ -184,9 +193,16 @@ public function getReservationById($id) {
         require '../vendor/PHPMailer/src/PHPMailer.php';
         require '../vendor/PHPMailer/src/SMTP.php';
         require '../data/emailData.php';
-
+        require "./emailContent.php";
+        require "../iban/generateIban.php";
+        require "../qrcode/qrCode.php";
         $mail = new PHPMailer(true);
-
+        $iban = generateCzechIBAN("0800","","3143593193");
+        $noteForQrcode= $this->firstName." ". $this->secondName ." ".$this->dateOfReservation." ".$this->timeRange;
+        $qrCodeContent = "SPD*1.0*ACC:" . $iban ."*AM:200.00*CC:CZK*MSG:".$noteForQrcode."*RN:BARBORA CHROMCAKOVA";
+         generateQRcode( $qrCodeContent);
+        $bodyOfEmailApproved=getBodyEmailApproved($this->dateOfReservation,$this->timeRange);
+        $bodyOfEmailWait= getBodyEmailWait($this->firstName,$this->secondName,$this->dateOfReservation,$this->timeRange);
         try {
             $mail->isSMTP();
             $mail->Host = "smtp.gmail.com";
@@ -199,22 +215,24 @@ public function getReservationById($id) {
             $mail->Encoding = "base64";
 
             $mail->setFrom("barbora.chromcakova@seznam.cz","Barbora Chromčáková");
+            // $mail->setFrom("pt75@seznam.cz","Barbora Chromčáková");
               // Nastavení viditelného odesílatele (bude zobrazeno příjemci)
-            $mail->addReplyTo('barbora.chromcakova@seznam.cz', 'Barbora Chromčáková');
+           $mail->addReplyTo('barbora.chromcakova@seznam.cz', 'Barbora Chromčáková');
+          //   $mail->addReplyTo('pt75@seznam.cz', 'Barbora Chromčáková');
             $mail->addAddress($this->email);
-            $mail->addBCC('barbora.chromcakova@seznam.cz');
+           // $mail->addBCC('barbora.chromcakova@seznam.cz');
             if($emailWithQRcode){
                 $mail->Subject = "Schválení rezervace - vánoční focení";
                 // Nastavení předmětu a těla zprávy
                 $mail->isHTML(true);
                 // Připojení QR kódu jako inline obrázku
-                $mail->addEmbeddedImage("../qrcode/qrcode.png", 'qrcode', 'qrcode.png');
+                $mail->addEmbeddedImage("../qrcode/qrcode.png", 'qrcode');
                 $mail->addAttachment('../qrcode/qrcode.png' );   
-                $mail->Body    = "Dobrý den,<br>Vaše rezervace byla schválena, zaplaťte prosím částku xxxKč do dvou dnů, zde je QR kód:".'<br><img src="cid:qrcode"><br><br>S pozdravem Barbora Chromčáková';
-            }else{
+                $mail->Body    = $bodyOfEmailApproved. '<br><img src="cid:qrcode"><br><br>';
+              }else{
                   $mail->Subject = "Rezervace - vánoční focení";
-                $mail->Body = "Dobrý den, \nVaše rezervace na \nJméno: ".$this->firstName." ". $this->secondName."\nDen: ".$this->dateOfReservation. "\nČas: ".$this->timeRange ."\nbyla zaznamenána a čeká na schválení.\nPotvrzení rezervace Vám příjde do emailu během 24 hodin.\n\nS pozdravem Barbora Chromčáková";
-            }
+                $mail->Body = $bodyOfEmailWait ;
+              }
             $mail->send();
 
             return "";
@@ -223,3 +241,5 @@ public function getReservationById($id) {
         }
     }
 }
+
+   

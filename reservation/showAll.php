@@ -78,6 +78,15 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
             <div class='col'>Počet psů: <?php echo $reservation['number_of_dogs']?></div>
             <div class='col'>Počet dospělých: <?php echo $reservation['number_of_adult']?></div>
             <div class='col'>Počet dětí: <?php echo $reservation['number_of_children']?></div>
+            <div class='col form-check'> 
+               <form id="paymentForm-<?php echo  $reservation['id']?>" action="../reservation/payment.php" method="post">
+                 <label class="form-check-label" for="flexCheckChecked-<?php echo  $reservation['id']?>">Zaplacená záloha</label>
+                 <input class="form-check-input" type="checkbox" name="payment" value="1" id="flexCheckChecked-<?php echo  $reservation['id']?>" onchange="submitForm(<?php echo  $reservation['id']?>)" <?php echo $reservation['payment']==1?  "checked": ""?> >
+                  <input type="text" name="id" value="<?php echo  $reservation['id']?>" hidden>
+    
+               </form>
+            
+            </div>
         </div>
         <div class="col-6">
             <div class='col'>Email: <?php echo $reservation['email']?></div>
@@ -131,3 +140,10 @@ if(isset($_SESSION["admin"]) && $_SESSION["admin"]==true){
           
             require "../layout/footer.php";
             ?>
+            
+        <script>
+        // Funkce, která odesílá formulář při změně checkboxu
+        function submitForm(id) {
+            document.getElementById('paymentForm-'+id).submit(); // Odeslání formuláře
+        }
+    </script>

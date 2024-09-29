@@ -27,15 +27,15 @@ function generateCzechIBAN($bankCode, $accountPrefix, $accountNumber) {
     
     // Složení konečného IBAN
     $iban = $countryCode . $checkDigits . $accountNumberComplete;
-    
+    // echo "Vygenerovaný IBAN: " . $iban;
     return $iban;
 }
 
-// Testování
-$bankCode = '0800'; // Příklad kódu banky (např. Česká spořitelna)
-$accountPrefix = ''; // Předčíslí účtu (pokud není, nechte prázdné)
-$accountNumber = '1234567890'; // Příklad čísla účtu
+// // Testování
+// $bankCode = '0800'; // Příklad kódu banky (např. Česká spořitelna)
+// $accountPrefix = ''; // Předčíslí účtu (pokud není, nechte prázdné)
+// $accountNumber = '1234567890'; // Příklad čísla účtu
 
-$iban = generateCzechIBAN($bankCode, $accountPrefix, $accountNumber);
-echo "Vygenerovaný IBAN: " . $iban;
+// $iban = generateCzechIBAN($bankCode, $accountPrefix, $accountNumber);
+
 ?>
